@@ -1,104 +1,112 @@
-/*var reply = prompt("What is the grid size? in X,Y");
-var gridsize = reply.split(",");*/
+var DIRECTIONS = {
+  'N': '-north',
+  'E': '-east',
+  'S': '-south',
+  'W': '-west'
+};
+var Rover = {
+  position: [5,9],
+  direction: 'N',
+};
 
-/*var reply2 = prompt("Where are you going? Type in f,r,l,b");
-var direction = reply2.split("");*/
+var COMMAND = 'ffrfrfffrfllffffrlllfflllfff';
+var GRID = {
+  rows: 10,
+  columns: 10
+};
 
-/*var reply3 = prompt("Where are you starting? in X, Y");
-var start = reply3.split(",");*/
 
-/*console.log("Your starting position is [" + start + "]");*/
+/* ROVER */
+// Move
+function move(){
+  var roverDirection = rover.direction;
+  var roverPosition = rover.position;
 
-/*var face = prompt("Which direction are you facing? (North, East, South, West)");*/
+  switch (direction) {
+    case "f":
+      if(roverDirection === "N") {
+        roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] - 1;
+      } else if (roverDirection === 'E') {
+        roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] + 1;
+      } else if (roverDirection === 'S') {
+        roverPosition[1] = (roverPosition[1] === GRID.columns - 1) ? GRID.columns - 1 : roverPosition[1] + 1;
+      } else if (roverDirection === 'W') {
+        roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
+      }
+        break;
+    case "b":
+      if(roverDirection === "N") {
+        roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
+      } else if (roverDirection === 'E') {
+        roverPosition[0] = (roverPosition[0] === GRID.rows + 1) ? GRID.rows + 1 : roverPosition[0] - 1;
+      } else if (roverDirection === 'S') {
+        roverPosition[1] = (roverPosition[1] === GRID.columns + 1) ? GRID.columns + 1 : roverPosition[1] - 1;
+      } else if (roverDirection === 'W') {
+        roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
+      }
 
-/*console.log("You are facing " + face);*/
-/*TEST DATA*/
-gridsize = [10,10];
-direction = ["f","f","r","r","r","r","r","f","f","r","f","f","f","f","f","f","f","f","f","f"];
-start = [0,0];
-x = start[0];
-y = start[1];
-face = "North";
+      break;
 
-function rover(x,y){
-  x = x;
-  y = y;
-  face = face;
+  }
+  moveRover(roverPosition)
+};
+// Turn
+function turn(direction) {
+  var roverDirection = rover.direction;
+  var roverPosition = rover.position ;
+  switch (direction) {
+    case 'l':
+      if (roverDirection === 'N') {
+        roverDirection = 'W';
+      } else if (roverDirection === 'E') {
+        roverDirection = 'N';
+      } else if (roverDirection === 'S') {
+        roverDirection = 'E';
+      } else if (roverDirection === 'W') {
+        roverDirection = 'S';
+      }
+    break;
+
+    case 'r':
+      if (roverDirection === 'N') {
+        roverDirection = 'E';
+      } else if (roverDirection === 'E') {
+        roverDirection = 'S';
+      } else if (roverDirection === 'S') {
+        roverDirection = 'W';
+      } else if (roverDirection === 'W') {
+        roverDirection = 'N';
+      }
+    break;
+  }
+
+  turnRover(roverDirection);
 }
 
-rover.move = function() {
-  for (i = 0; i < (direction.length + 1); i++) {
-    var dir = direction[i];
-    if (face === "North"){
-      switch(dir) {
-      case "r": x = x + 1;
-        break;
-      case "l": x = x - 1;
-        break;
-      case "f": y = y + 1;
-        break;
-      case "b": y = y - 1;
-          break;}
-      } // Close North
-    else if (face === "East"){
-      switch(dir) {
-      case "r": y = y + 1;
-        break;
-      case "l": y = y - 1;
-        break;
-      case "f": x = x + 1;
-        break;
-      case "b": x = x - 1;
-          break;}
-      } //Close East
-    else if (face === "West"){
-      switch(dir) {
-      case "r": y = y + 1;
-        break;
-      case "l": y = y - 1;
-        break;
-      case "f": x = x - 1;
-        break;
-      case "b": x = x + 1;
-          break;}
-    } //Close West
-    else if (face === "South"){
-      switch(dir) {
-      case "r": x = x - 1;
-        break;
-      case "l": x = x + 1;
-        break;
-      case "f": y = y - 1;
-        break;
-      case "b": y = y + 1;
-          break;}
-      } //Close South
-    else {
-      console.log("Again: North, South, East or West?");
-    } //Close Else
-  } //Close For
-      /*console.log("Your end position is [" + [x,y] + "]");*/
-  }; //Close Function
+function turnRover(direction) {
+  rover.direction = direction;
 
-var grid = {
-  x: gridsize[0],
-  y: gridsize[1]
-};
-/*console.log("Size of grid [" + gridsize + "]");*/
+}
+function execCommand(command) {
+  var letters = command.split('');
 
-rover.checkGrid = function() {
-  if (gridsize[1] < Math.abs(y)){
-        y = (Math.abs(y) % (gridsize[1] / 2));
-    }
-  if (gridsize[0] < Math.abs(x)){
-        x = (Math.abs(x) % (gridsize[0]/2));
-    }
-      else {
-        console.log("Your end position is [" + [x,y] + "]");
-        return true;
-    }
-  console.log("Your end position is [" + [x,y] + "]");
-};
+  for (var i = 0; i < letters.length; i++) {
+    var letter = letters[i];
+    if (letter === 'f' || letter === 'b') {
+       move(letter);
 
-rover.move(start[0], start[1]);
-rover.checkGrid();
+    }
+
+    if (letter === 'r' || letter === 'l') {
+       turn(letter);
+      
+    }
+  }
+}
+
+/* INIT */
+console.log('Initial  position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
+turnRover(rover.direction);
+moveRover(rover.position);
+
+execCommand(COMMAND);
