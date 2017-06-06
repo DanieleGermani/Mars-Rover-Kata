@@ -14,13 +14,24 @@ var GRID = {
   rows: 10,
   columns: 10
 };
+/* GRID */
+function Grid() {
+
+
+  for (var i = 0; i < GRID.rows; i++) {
+    for (var j = 0; j < GRID.columns; j++) {
+
+    }
+  }
+}
+
 
 
 /* ROVER */
 // Move
 function move(direction){
-  var roverDirection = rover.direction;
-  var roverPosition = rover.position;
+  var roverDirection = Rover.direction;
+  var roverPosition = Rover.position;
 
   switch (direction) {
     case "f":
@@ -50,10 +61,14 @@ function move(direction){
   }
   moveRover(roverPosition)
 };
+function moveRover(position) {
+  Rover.position = position;
+}
+
 // Turn
 function turn(direction) {
-  var roverDirection = rover.direction;
-  var roverPosition = rover.position ;
+  var roverDirection = Rover.direction;
+  var roverPosition = Rover.position ;
   switch (direction) {
     case 'l':
       if (roverDirection === 'N') {
@@ -84,7 +99,7 @@ function turn(direction) {
 }
 
 function turnRover(direction) {
-  rover.direction = direction;
+  Rover.direction = direction;
 
 }
 function execCommand(command) {
@@ -99,13 +114,13 @@ function execCommand(command) {
 
     if (letter === 'r' || letter === 'l') {
        turn(letter);
-
+console.log('New  position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
     }
   }
 }
 
 /* INIT */
-console.log('New  position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
-moveRover(rover.position);
-turnRover(rover.direction)
+
+moveRover(Rover.position);
+turnRover(Rover.direction)
 execCommand(COMMAND);
