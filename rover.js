@@ -1,7 +1,6 @@
-
 var Rover = {
-  position: [0,0],
-  direction: 'N',
+  position: [5, 2],
+  direction: 'W',
 };
 
 var COMMAND = 'ffrfrfffrbbbblfffffrbbbbblrbbblffff';
@@ -12,13 +11,13 @@ var GRID = {
 
 /* ROVER */
 // Move
-function move(direction){
+function move(direction) {
   var roverDirection = Rover.direction;
   var roverPosition = Rover.position;
 
   switch (direction) {
     case "f":
-      if(roverDirection === "N") {
+      if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] - 1;
       } else if (roverDirection === 'E') {
         roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] + 1;
@@ -27,14 +26,14 @@ function move(direction){
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
       }
-        break;
+      break;
     case "b":
-      if(roverDirection === "N") {
+      if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] - 1;
+        roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] + 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === GRID.columns - 1) ? GRID.columns - 1 : roverPosition[1] - 1;
+        roverPosition[1] = (roverPosition[1] === GRID.columns - 1) ? GRID.columns - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
       }
@@ -44,6 +43,7 @@ function move(direction){
   }
   moveRover(roverPosition)
 };
+
 function moveRover(position) {
   Rover.position = position;
 }
@@ -51,7 +51,7 @@ function moveRover(position) {
 // Turn
 function turn(direction) {
   var roverDirection = Rover.direction;
-  var roverPosition = Rover.position ;
+  var roverPosition = Rover.position;
   switch (direction) {
     case 'l':
       if (roverDirection === 'N') {
@@ -63,7 +63,7 @@ function turn(direction) {
       } else if (roverDirection === 'W') {
         roverDirection = 'S';
       }
-    break;
+      break;
 
     case 'r':
       if (roverDirection === 'N') {
@@ -75,7 +75,7 @@ function turn(direction) {
       } else if (roverDirection === 'W') {
         roverDirection = 'N';
       }
-    break;
+      break;
   }
 
   turnRover(roverDirection);
@@ -85,18 +85,19 @@ function turnRover(direction) {
   Rover.direction = direction;
 
 }
+
 function execCommand(command) {
   var letters = command.split('');
 
   for (var i = 0; i < letters.length; i++) {
     var letter = letters[i];
     if (letter === 'f' || letter === 'b') {
-       move(letter);
-console.log(' Direction: ' +Rover.direction+ ' New Rover position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
+      move(letter);
+      console.log(' Direction: ' + Rover.direction + ' New Rover position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
     }
 
     if (letter === 'r' || letter === 'l') {
-       turn(letter);
+      turn(letter);
 
     }
   }
