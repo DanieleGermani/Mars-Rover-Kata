@@ -3,7 +3,7 @@ var Rover = {
   direction: 'N',
 };
 
-var COMMAND = 'ffrfrfffrbbbblfffff';
+var COMMAND = 'ffrfrfffrbbbblffffffffff';
 /*var GRID = {
   rows: 10,
   columns: 10
@@ -13,7 +13,7 @@ var grid = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-console.log(grid);
+console.log(grid[[0],[1]]);
 
 /*OBSTACULOS*/
 function obstacle(x, y) {
@@ -34,7 +34,7 @@ function move(direction) {
       } else if (roverDirection === 'E') {
         roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] + 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[0].lenght - 1) ? grid[0].lenght - 1 : roverPosition[1] + 1;
+        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
       }
@@ -46,7 +46,7 @@ function move(direction) {
       } else if (roverDirection === 'E') {
         roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] - 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[0].lenght - 1) ? grid[0].lenght - 1 : roverPosition[1] - 1;
+        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] - 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
       }
