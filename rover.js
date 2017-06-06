@@ -1,13 +1,18 @@
 var Rover = {
-  position: [5, 2],
-  direction: 'W',
+  position: [0, 0],
+  direction: 'N',
 };
 
-var COMMAND = 'ffrfrfffrbbbblfffffrbbbbblrbbblffff';
-var GRID = {
+var COMMAND = 'ffrfrfffrbbbblffff';
+/*var GRID = {
   rows: 10,
   columns: 10
-};
+};*/
+var grid = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
+console.log(grid);
+
+/*OBSTACULOS*/
+
 
 /* ROVER */
 // Move
@@ -20,9 +25,9 @@ function move(direction) {
       if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] - 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] + 1;
+        roverPosition[0] = (roverPosition[0] === grid[0] - 1) ? grid[0] - 1 : roverPosition[0] + 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === GRID.columns - 1) ? GRID.columns - 1 : roverPosition[1] + 1;
+        roverPosition[1] = (roverPosition[1] === grid[1] - 1) ? grid[1] - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
       }
@@ -31,9 +36,9 @@ function move(direction) {
       if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === GRID.rows - 1) ? GRID.rows - 1 : roverPosition[0] + 1;
+        roverPosition[0] = (roverPosition[0] === grid[0] - 1) ? grid[0] - 1 : roverPosition[0] - 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === GRID.columns - 1) ? GRID.columns - 1 : roverPosition[1] + 1;
+        roverPosition[1] = (roverPosition[1] === grid[1] - 1) ? grid[1] - 1 : roverPosition[1] - 1 ;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
       }
