@@ -5,7 +5,7 @@ var DIRECTIONS = {
   'W': '-west'
 };
 var Rover = {
-  position: [5,9],
+  position: [0,0],
   direction: 'N',
 };
 
@@ -18,7 +18,7 @@ var GRID = {
 
 /* ROVER */
 // Move
-function move(){
+function move(direction){
   var roverDirection = rover.direction;
   var roverPosition = rover.position;
 
@@ -99,14 +99,13 @@ function execCommand(command) {
 
     if (letter === 'r' || letter === 'l') {
        turn(letter);
-      
+
     }
   }
 }
 
 /* INIT */
-console.log('Initial  position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
-turnRover(rover.direction);
+console.log('New  position: ['+ Rover.position[0] + ', ' + Rover.position[1] + ']')
 moveRover(rover.position);
-
+turnRover(rover.direction)
 execCommand(COMMAND);
