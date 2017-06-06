@@ -3,42 +3,50 @@ var Rover = {
   direction: 'N',
 };
 
-var COMMAND = 'ffrfrfffrbbbblffff';
+var COMMAND = 'ffrfrfffrbbbblfffff';
 /*var GRID = {
   rows: 10,
   columns: 10
 };*/
-var grid = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
+var grid = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+
 console.log(grid);
 
 /*OBSTACULOS*/
-
+function obstacle(x, y) {
+  grid[[x], [y]] = 1;
+}
+obstacle(3, 8);
+obstacle(2, 5);
 
 /* ROVER */
 // Move
 function move(direction) {
   var roverDirection = Rover.direction;
   var roverPosition = Rover.position;
-
   switch (direction) {
     case "f":
       if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] - 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === grid[0] - 1) ? grid[0] - 1 : roverPosition[0] + 1;
+        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] + 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[1] - 1) ? grid[1] - 1 : roverPosition[1] + 1;
+        roverPosition[1] = (roverPosition[1] === grid[0].lenght - 1) ? grid[0].lenght - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
       }
       break;
+
     case "b":
       if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === grid[0] - 1) ? grid[0] - 1 : roverPosition[0] - 1;
+        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] - 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[1] - 1) ? grid[1] - 1 : roverPosition[1] - 1 ;
+        roverPosition[1] = (roverPosition[1] === grid[0].lenght - 1) ? grid[0].lenght - 1 : roverPosition[1] - 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
       }
