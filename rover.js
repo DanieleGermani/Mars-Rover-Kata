@@ -16,12 +16,12 @@ var grid = [
 
 console.log(grid);
 
-/*OBSTACULOS*/
+/*OBSTACULOS
 function obstacle(x, y) {
   grid[x][y] = 1;
 
 };
-obstacle(1,1);
+obstacle(1,1);*/
 
 /* ROVER */
 // Move
