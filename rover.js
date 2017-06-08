@@ -3,30 +3,32 @@ var Rover = {
   direction: 'N',
 };
 
-var COMMAND = 'ffrfrfffrbbbblffffffffff';
+var COMMAND = 'ffrfrfffrbbbbrfff';
 /*var GRID = {
   rows: 10,
   columns: 10
 };*/
+//grid with OBSTACLES
 var grid = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0, 1, 0, 0, 0]
 ];
 
-console.log(grid[[0],[1]]);
+console.log(grid);
 
 /*OBSTACULOS*/
 function obstacle(x, y) {
-  grid[[x], [y]] = 1;
-}
-obstacle(3, 8);
-obstacle(2, 5);
+  grid[x][y] = 1;
+
+};
+obstacle(1,1);
 
 /* ROVER */
 // Move
 function move(direction) {
   var roverDirection = Rover.direction;
   var roverPosition = Rover.position;
+  var newPosition = Rover.position;
   switch (direction) {
     case "f":
       if (roverDirection === "N") {
@@ -37,6 +39,8 @@ function move(direction) {
         roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
+      } else if (grid[newPosition[1]] [newPosition[0]]  === 1) {
+        console.log(' Rover position: [' + Rover.position + '] can t do this move. There is an obstacle. Try other way!');
       }
       break;
 
@@ -44,11 +48,13 @@ function move(direction) {
       if (roverDirection === "N") {
         roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
       } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] - 1;
+        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] + 1;
       } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] - 1;
+        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] + 1;
       } else if (roverDirection === 'W') {
         roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
+      } else if (grid[newPosition[0]][newPosition[1]] === 1) {
+        console.log(' Rover position: [' + Rover.position + '] can t do this move. There is an obstacle. Try other way!');
       }
 
       break;
@@ -59,6 +65,7 @@ function move(direction) {
 
 function moveRover(position) {
   Rover.position = position;
+
 }
 
 // Turn
@@ -106,7 +113,7 @@ function execCommand(command) {
     var letter = letters[i];
     if (letter === 'f' || letter === 'b') {
       move(letter);
-      console.log(' Direction: ' + Rover.direction + ' New Rover position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
+      console.log(' Direction: ' + Rover.direction + ' - New Rover position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
     }
 
     if (letter === 'r' || letter === 'l') {
@@ -118,6 +125,7 @@ function execCommand(command) {
 
 /* INIT */
 moveRover(Rover.position);
-turnRover(Rover.direction)
+turnRover(Rover.direction);
+
 
 execCommand(COMMAND);
