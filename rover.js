@@ -1,131 +1,133 @@
-var Rover = {
-  position: [0, 0],
-  direction: 'N',
-};
+/*GRID*/
 
-var COMMAND = 'ffrfrfffrbbbbrfff';
-/*var GRID = {
-  rows: 10,
-  columns: 10
-};*/
-//grid with OBSTACLES
 var grid = [
-  [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 1, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
 ];
-
 console.log(grid);
+//OBSTACLES
 
-/*OBSTACULOS
-function obstacle(x, y) {
-  grid[x][y] = 1;
+function obstacle(x, y, nameObstacles) {
+  grid[x][y] = nameObstacles;
+}
+obstacle(2, 1, "Hole");
+obstacle(4,7, "Rock");
 
-};
-obstacle(1,1);*/
-
-/* ROVER */
-// Move
-function move(direction) {
-  var roverDirection = Rover.direction;
-  var roverPosition = Rover.position;
-  var newPosition = Rover.position;
-  switch (direction) {
-    case "f":
-      if (roverDirection === "N") {
-        roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] - 1;
-      } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] + 1;
-      } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] + 1;
-      } else if (roverDirection === 'W') {
-        roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] - 1;
-      } else if (grid[newPosition[1]] [newPosition[0]]  === 1) {
-        console.log(' Rover position: [' + Rover.position + '] can t do this move. There is an obstacle. Try other way!');
-      }
-      break;
-
-    case "b":
-      if (roverDirection === "N") {
-        roverPosition[1] = (roverPosition[1] === 0) ? 0 : roverPosition[1] + 1;
-      } else if (roverDirection === 'E') {
-        roverPosition[0] = (roverPosition[0] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[0] + 1;
-      } else if (roverDirection === 'S') {
-        roverPosition[1] = (roverPosition[1] === grid[0].length - 1) ? grid[0].length - 1 : roverPosition[1] + 1;
-      } else if (roverDirection === 'W') {
-        roverPosition[0] = (roverPosition[0] === 0) ? 0 : roverPosition[0] + 1;
-      } else if (grid[newPosition[0]][newPosition[1]] === 1) {
-        console.log(' Rover position: [' + Rover.position + '] can t do this move. There is an obstacle. Try other way!');
-      }
-
-      break;
-
-  }
-  moveRover(roverPosition)
-};
-
-function moveRover(position) {
-  Rover.position = position;
-
+function Rover(name, positionA, positionB, direction) {
+  this.name = name;
+  this.position = [positionA, positionB];
+  this.direction = direction;
 }
 
-// Turn
-function turn(direction) {
-  var roverDirection = Rover.direction;
-  var roverPosition = Rover.position;
-  switch (direction) {
-    case 'l':
-      if (roverDirection === 'N') {
-        roverDirection = 'W';
-      } else if (roverDirection === 'E') {
-        roverDirection = 'N';
-      } else if (roverDirection === 'S') {
-        roverDirection = 'E';
-      } else if (roverDirection === 'W') {
-        roverDirection = 'S';
-      }
-      break;
+function initRover(Rover) {
 
-    case 'r':
-      if (roverDirection === 'N') {
-        roverDirection = 'E';
-      } else if (roverDirection === 'E') {
-        roverDirection = 'S';
-      } else if (roverDirection === 'S') {
-        roverDirection = 'W';
-      } else if (roverDirection === 'W') {
-        roverDirection = 'N';
-      }
-      break;
-  }
-
-  turnRover(roverDirection);
+  grid[Rover.position[0]][Rover.position[1]] = Rover;
+  console.log('Initial ' + Rover.name + ' position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
 }
+var Rover1 = new Rover('Rover 1', 0, 0, 'N');
+initRover(Rover1);
 
-function turnRover(direction) {
-  Rover.direction = direction;
+var Rover2 = new Rover('Rover 2', 0, 8, 'N');
+initRover(Rover2);
 
-}
+//Moves
+function moveRover(anyRover, letters) {
 
-function execCommand(command) {
-  var letters = command.split('');
+  grid[anyRover.position[0]][anyRover.position[1]] = 0;
 
-  for (var i = 0; i < letters.length; i++) {
-    var letter = letters[i];
-    if (letter === 'f' || letter === 'b') {
-      move(letter);
-      console.log(' Direction: ' + Rover.direction + ' - New Rover position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
+  move_loop:
+    for (var i = 0; i < letters.length; i++) {
+
+      var newPosition = (anyRover.position).slice();
+
+      switch (anyRover.direction) {
+
+        case 'N':
+          if (letters[i] === "f") {
+            newPosition[0]++;
+          } else if (letters[i] === "b") {
+            newPosition[0]--;
+          } else if (letters[i] === "l") {
+            anyRover.direction = "W";
+          } else if (letters[i] = "r") {
+            anyRover.direction = "E";
+          } else {
+            console.error("type another commands:" + i);
+          }
+
+          break;
+
+        case 'S':
+          if (letters[i] === "f") {
+            newPosition[0]--;
+          } else if (letters[i] === "b") {
+            newPosition[0]++;
+          } else if (letters[i] === "l") {
+            anyRover.direction = "E";
+          } else if (letters[i] === "r") {
+            anyRover.direction = "W"
+          } else {
+            console.error("type another commands:" + i);
+          }
+
+          break;
+
+        case 'E':
+          if (letters[i] === "b") {
+            newPosition[1]++;
+          } else if (letters[i] === "f") {
+            newPosition[1]--;
+          } else if (letters[i] === "l") {
+            anyRover.direction = "N";
+          } else if (letters[i] === "r") {
+            anyRover.direction = "S"
+          } else {
+            console.error("type another commands:" + i);
+          }
+
+          break;
+
+        case 'W':
+          if (letters[i] === "b") {
+            newPosition[1]--;
+          } else if (letters[i] === "f") {
+            newPosition[1]++;
+          } else if (letters[i] === "l") {
+            anyRover.direction = "S";
+          } else if (letters[i] === "r") {
+            anyRover.direction = "N"
+          } else {
+            console.error("no conozco este comando :" + i);
+          }
+
+
+          break;
+      };
+      if (grid[newPosition[0]][newPosition[1]] === 0 && newPosition[0] >= 0 && newPosition[1] >= 0 && newPosition[0] <= grid[0].length - 1 && newPosition[1] <= grid[1].length - 1) {
+        anyRover.position = newPosition;
+        iniPosition = newPosition;
+      } else if (newPosition[0] < 0 && newPosition[1] < 0 && newPosition[0] > grid[0].length - 1 && newPosition[1] > grid[1].length - 1) {
+        console.log(anyRover.name + ' cant do this move. You re trying to go out of the grid!')
+        break move_loop;
+      } else if (grid[newPosition[0]][newPosition[1]] === "Hole","Rock") {
+        console.log(anyRover.name + ' cant do this move. There is a obstacle; Try other way!')
+        break move_loop;
+      } else {
+        console.log(anyRover.name + ' cant do this move. There is another rover on your way!')
+        break move_loop;
+      };
     }
 
-    if (letter === 'r' || letter === 'l') {
-      turn(letter);
-
-    }
-  }
+  grid[anyRover.position[0]][anyRover.position[1]] = anyRover;
+  console.log(anyRover.name + '  Direction: ' + anyRover.direction + ' New position: [' + anyRover.position[0] + ', ' + anyRover.position[1] + ']')
 }
-
-/* INIT */
-moveRover(Rover.position);
-turnRover(Rover.direction);
-
-
-execCommand(COMMAND);
+moveRover(Rover1, 'fffflfffffff');
+moveRover(Rover2,'ffblfffrfff');
