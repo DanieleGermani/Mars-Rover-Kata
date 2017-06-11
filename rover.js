@@ -16,10 +16,13 @@ console.log(grid);
 //OBSTACLES
 
 function obstacle(x, y, nameObstacles) {
+
+  this.nameObstacles = nameObstacles;
   grid[x][y] = nameObstacles;
 }
 obstacle(2, 1, "Hole");
-obstacle(4,7, "Rock");
+obstacle(4, 7, "Rock");
+obstacle(7, 8, "Wall")
 
 function Rover(name, positionA, positionB, direction) {
   this.name = name;
@@ -32,6 +35,7 @@ function initRover(Rover) {
   grid[Rover.position[0]][Rover.position[1]] = Rover;
   console.log('Initial ' + Rover.name + ' position: [' + Rover.position[0] + ', ' + Rover.position[1] + ']')
 }
+//ROVERS
 var Rover1 = new Rover('Rover 1', 0, 0, 'N');
 initRover(Rover1);
 
@@ -117,8 +121,8 @@ function moveRover(anyRover, letters) {
       } else if (newPosition[0] < 0 && newPosition[1] < 0 && newPosition[0] > grid[0].length - 1 && newPosition[1] > grid[1].length - 1) {
         console.log(anyRover.name + ' cant do this move. You re trying to go out of the grid!')
         break move_loop;
-      } else if (grid[newPosition[0]][newPosition[1]] === "Hole","Rock") {
-        console.log(anyRover.name + ' cant do this move. There is a obstacle; Try other way!')
+      } else if (grid[newPosition[0]][newPosition[1]] === "Hole", "Rock", "Wall") {
+        console.log(anyRover.name + ' cant do this move. There is a obstacle;  Try other way!')
         break move_loop;
       } else {
         console.log(anyRover.name + ' cant do this move. There is another rover on your way!')
@@ -130,4 +134,4 @@ function moveRover(anyRover, letters) {
   console.log(anyRover.name + '  Direction: ' + anyRover.direction + ' New position: [' + anyRover.position[0] + ', ' + anyRover.position[1] + ']')
 }
 moveRover(Rover1, 'fffflfffffff');
-moveRover(Rover2,'ffblfffrfff');
+moveRover(Rover2, 'ffblffflfff');
